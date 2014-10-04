@@ -1,6 +1,8 @@
 package com.ka_lite.fel.ka_lite_android_native.dummy;
 
+import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,7 @@ public class DummyContent {
 
     //constructor
     public DummyContent() {
+
         populateItemMap();
 
     }
@@ -36,7 +39,14 @@ public class DummyContent {
         root = new File(Environment.getExternalStorageDirectory()
                 .getAbsolutePath());
 
-        for (File f : root.listFiles()) {
+        File unicefFolder = root.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String s) {
+                return s.equals("UNICEF");
+            }
+        })[0];
+
+        for (File f : unicefFolder.listFiles()) {
             if (f.isDirectory()) {
                 DummyItem item = new DummyItem("", "folder " + f.getName(), f.getPath());
                 ITEMS.add(item);
