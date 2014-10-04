@@ -34,22 +34,15 @@ public class DummyContent {
                 .getAbsolutePath());
         getfile(root);
 
-        if(fileList.size() > 0) {
-            System.out.println("eliii > 0");
-        }
-        else {
-            System.out.println("eliii == 0");
-        }
-
         for (int i = 0; i < fileList.size(); i++) {
 
             if (fileList.get(i).isDirectory()) {
-                DummyItem item = new DummyItem(i + "", "folder " + fileList.get(i).getName());
+                DummyItem item = new DummyItem(i + "", "folder " + fileList.get(i).getName(), fileList.get(i).getPath());
                 ITEMS.add(item);
                 ITEM_MAP.put(item.id, item);
             }else{
                 //addItem(new DummyItem(i + "", fileList.get(i).getName()));
-                DummyItem item = new DummyItem(i + "", fileList.get(i).getName());
+                DummyItem item = new DummyItem(i + "", fileList.get(i).getName(), fileList.get(i).getPath());
                 ITEMS.add(item);
                 ITEM_MAP.put(item.id, item);
             }
@@ -58,25 +51,38 @@ public class DummyContent {
         }
     }
 
+    private boolean found = false;
+    private String UNICEF = "UNICEF";
     public ArrayList<File> getfile(File dir) {
         File listFile[] = dir.listFiles();
         if (listFile != null && listFile.length > 0) {
             for (int i = 0; i < listFile.length; i++) {
 
                 if (listFile[i].isDirectory()) {
-                    fileList.add(listFile[i]);
-                    getfile(listFile[i]);
-
-                } else {
-                    if (listFile[i].getName().endsWith(".png")
-                            || listFile[i].getName().endsWith(".jpg")
-                            || listFile[i].getName().endsWith(".jpeg")
-                            || listFile[i].getName().endsWith(".gif"))
-
-                    {
-                        fileList.add(listFile[i]);
+                    //    fileList.add(listFile[i]);
+                    //getfile(listFile[i]);
+                    if(!listFile[i].getName().equals(UNICEF)) {
+                        System.out.println("nono found");
+                        getfile(listFile[i]);
+                        //found = true;
+                    }else{
+                        System.out.println("elieli found");
+                        File targetFile[] = listFile[i].listFiles();
+                        for(int j =0; j < targetFile.length; j++){
+                            fileList.add(targetFile[j]);
+                        }
                     }
                 }
+
+//              } else {
+//                    if (listFile[i].getName().endsWith(".png")
+//                            || listFile[i].getName().endsWith(".jpg")
+//                            || listFile[i].getName().endsWith(".jpeg")
+//                            || listFile[i].getName().endsWith(".gif"))
+//
+//                    {
+//                        fileList.add(listFile[i]);
+//                    }
 
             }
         }
@@ -101,10 +107,12 @@ public class DummyContent {
     public static class DummyItem {
         public String id;
         public String content;
+        public String path;
 
-        public DummyItem(String id, String content) {
+        public DummyItem(String id, String content, String path) {
             this.id = id;
             this.content = content;
+            this.path = path;
         }
 
         @Override
