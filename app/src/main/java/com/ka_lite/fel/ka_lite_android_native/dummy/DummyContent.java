@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.io.File;
 import android.os.Environment;
-import android.graphics.Color;
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -28,7 +27,7 @@ public class DummyContent {
     public static Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
 
     //constructor
-    public DummyContent(){
+    public DummyContent() {
         //getting SDcard root path
         root = new File(Environment.getExternalStorageDirectory()
                 .getAbsolutePath());
@@ -46,13 +45,11 @@ public class DummyContent {
                 ITEMS.add(item);
                 ITEM_MAP.put(item.id, item);
             }
-
-            System.out.println(fileList.get(i).getName());
         }
     }
 
     private boolean found = false;
-    private String UNICEF = "UNICEF";
+    private String CONTENTLOAD_ROOT = "CONTENTLOAD_ROOT";
     public ArrayList<File> getfile(File dir) {
         File listFile[] = dir.listFiles();
         if (listFile != null && listFile.length > 0) {
@@ -61,7 +58,7 @@ public class DummyContent {
                 if (listFile[i].isDirectory()) {
                     //    fileList.add(listFile[i]);
                     //getfile(listFile[i]);
-                    if(!listFile[i].getName().equals(UNICEF)) {
+                    if(!listFile[i].getName().equals(CONTENTLOAD_ROOT)) {
                         System.out.println("nono found");
                         getfile(listFile[i]);
                         //found = true;
